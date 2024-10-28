@@ -9,6 +9,7 @@ exec 2>&3
 if [ $con_dev -ne 0 ];
 then
 	echo -e "\e[32m"
+	echo -e "Welcome to librealsense installation script. This script installs the last known version of libreasense with support for the T265 Tracking camera."
 	read -p "Remove all RealSense cameras attached. Hit any key when ready"
 	echo -e "\e[0m"
 fi
