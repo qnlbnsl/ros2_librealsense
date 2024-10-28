@@ -9,3 +9,4 @@ rosdep update # "sudo rosdep update --include-eol-distros" for Foxy and earlier
 rosdep install -i --from-path src --rosdistro $ROS_DISTRO --os=$OS --skip-keys=librealsense2 -y
 
 source /opt/ros/$ROS_DISTRO/setup.bash
+
