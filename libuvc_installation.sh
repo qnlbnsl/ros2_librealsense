@@ -1,5 +1,6 @@
 #!/bin/bash -xe
-
+repo_name="librealsense-t265"
+repo_uri="https://github.com/qnlbnsl/$repo_name.git"
 #Locally suppress stderr to avoid raising not relevant messages
 exec 3>&2
 exec 2> /dev/null
@@ -33,24 +34,19 @@ fi
 
 echo Installing Librealsense-required dev packages
 sudo apt-get install git cmake libssl-dev freeglut3-dev libusb-1.0-0-dev pkg-config libgtk-3-dev unzip -y
-rm -f ./v2.53.1.zip
-
+# rm -f ./v2.53.1.zip
 # wget https://github.com/IntelRealSense/librealsense/archive/v2.53.1.zip
-
-wget https://github.com/IntelRealSense/librealsense/archive/refs/tags/v2.53.1.zip
-unzip ./v2.53.1.zip -d .
-cd ./librealsense-2.53.1
+# wget https://github.com/IntelRealSense/librealsense/archive/refs/tags/v2.53.1.zip
+# unzip ./v2.53.1.zip -d .
+git clone $repo_uri
+cd ./$repo_name
 
 echo Install udev-rules
-sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/ 
+sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 sudo cp config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/
-sudo udevadm control --reload-rules && sudo udevadm trigger 
+sudo udevadm control --reload-rules && sudo udevadm trigger
 mkdir build && cd build
 cmake ../ -DFORCE_LIBUVC=true -DCMAKE_BUILD_TYPE=release
 make -j2
 sudo make install
 echo -e "\e[92m\n\e[1mLibrealsense script completed.\n\e[0m"
-
-
-
-
